@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Functional Synergy | Investor Deck</title>
+    <title>Functional Synergy | Professional Review</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -17,186 +17,146 @@
         }
 
         body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
+            margin: 0; padding: 0; width: 100%; height: 100%;
             font-family: 'Montserrat', sans-serif;
-            background-color: var(--bg-dark);
-            color: var(--text-light);
+            background-color: var(--bg-dark); color: var(--text-light);
             overflow: hidden;
             background-image: 
                 radial-gradient(circle at 15% 50%, rgba(0, 229, 255, 0.08) 0%, transparent 50%),
                 radial-gradient(circle at 85% 30%, rgba(176, 38, 255, 0.08) 0%, transparent 50%);
         }
 
-        /* Glassmorphism Card Style */
         .glass-panel {
-            background: var(--glass-bg);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
-            padding: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            background: var(--glass-bg); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border); border-radius: 16px; padding: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4); transition: all 0.3s ease;
         }
 
-        .slider-container {
-            position: relative;
-            width: 100%;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .slide {
-            position: absolute;
-            width: 85%;
-            height: 80%;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s ease-in-out;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .slide.active {
-            opacity: 1;
-            visibility: visible;
-        }
+        .slider-container { position: relative; width: 100%; height: 100vh; display: flex; align-items: center; justify-content: center; }
+        .slide { position: absolute; width: 85%; height: 80%; opacity: 0; visibility: hidden; transition: opacity 0.5s ease-in-out; display: flex; flex-direction: column; justify-content: center; }
+        .slide.active { opacity: 1; visibility: visible; z-index: 20;}
 
         /* Typography */
-        h1 {
-            font-size: 4.5rem;
-            font-weight: 800;
-            margin-bottom: 0.5rem;
-            background: linear-gradient(90deg, var(--cyan), var(--violet));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            line-height: 1.1;
-        }
-
-        h2 {
-            font-size: 3rem;
-            font-weight: 600;
-            margin-bottom: 30px;
-            border-bottom: 1px solid var(--glass-border);
-            padding-bottom: 15px;
-        }
-
+        h1 { font-size: 4.5rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(90deg, var(--cyan), var(--violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.1; }
+        h2 { font-size: 3rem; font-weight: 600; margin-bottom: 30px; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; }
         h3 { font-size: 1.5rem; font-weight: 400; color: var(--text-muted); }
-        p, li { font-size: 1.3rem; line-height: 1.7; color: #d1d8e0; margin-bottom: 15px; }
-        
+        p, li { font-size: 1.2rem; line-height: 1.7; color: #d1d8e0; margin-bottom: 15px; }
         .highlight { color: var(--cyan); font-weight: 600; }
         .metric-huge { font-size: 5rem; font-weight: 800; color: var(--cyan); display: block; line-height: 1; }
 
-        /* Dynamic Grids */
-        .grid-split {
-            display: grid;
-            grid-template-columns: 1fr 1.5fr;
-            gap: 40px;
-            height: 100%;
-            align-items: center;
+        .grid-split { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; height: 100%; align-items: center; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 20px; }
+
+        /* KINEMATIC SEQUENCE VIEWER */
+        .kinematic-viewer {
+            width: 100%; height: 480px; border-radius: 12px; position: relative;
+            border: 1px solid var(--glass-border); box-shadow: 0 0 30px rgba(0, 229, 255, 0.05);
+            display: flex; flex-direction: column; background-color: #0a0b10; overflow: hidden;
         }
 
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-top: 20px;
-        }
+        .kinematic-frame-container { flex: 1; position: relative; }
 
-        /* Image Containers */
-        .image-box {
-            width: 100%;
-            height: 400px;
-            border-radius: 12px;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-            overflow: hidden;
-            border: 1px solid var(--glass-border);
+        .kinematic-frame {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            opacity: 0; visibility: hidden; transition: opacity 0.4s ease;
+            background-size: cover; background-position: center;
         }
         
-        .image-box::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to top, rgba(5,5,7,0.9), transparent);
+        .kinematic-frame.active { opacity: 1; visibility: visible; z-index: 5; }
+
+        /* Sync Tabs */
+        .kinematic-tabs { display: flex; height: 50px; background: rgba(255,255,255,0.02); border-top: 1px solid var(--glass-border); z-index: 10; }
+        .kinematic-tab {
+            flex: 1; display: flex; align-items: center; justify-content: center;
+            font-size: 0.95rem; font-weight: 600; color: var(--text-muted);
+            cursor: pointer; transition: all 0.2s; border-right: 1px solid var(--glass-border);
+        }
+        .kinematic-tab:last-child { border-right: none; }
+        .kinematic-tab:hover { background: rgba(0, 229, 255, 0.1); color: var(--text-light); }
+        .kinematic-tab.active { background: rgba(0, 229, 255, 0.15); color: var(--cyan); border-bottom: 2px solid var(--cyan); }
+
+        /* Advanced Interactive Hotspots */
+        .hotspot {
+            position: absolute; width: 24px; height: 24px; background-color: var(--cyan);
+            border-radius: 50%; z-index: 10; transform: translate(-50%, -50%);
+            box-shadow: 0 0 15px var(--cyan); cursor: pointer;
+        }
+        .hotspot::before {
+            content: ''; position: absolute; top: -8px; left: -8px; right: -8px; bottom: -8px;
+            border: 2px solid var(--cyan); border-radius: 50%; animation: pulse 2s linear infinite;
+        }
+        @keyframes pulse { 0% { transform: scale(0.8); opacity: 1; } 100% { transform: scale(2); opacity: 0; } }
+
+        .hotspot-label {
+            position: absolute; left: 35px; top: -10px;
+            background: rgba(5, 5, 7, 0.85); /* Deep dark background for perfect contrast */
+            border: 1px solid var(--cyan);
+            color: var(--text-light); padding: 12px 18px; border-radius: 8px;
+            font-size: 0.9rem; font-weight: 600; 
+            white-space: normal; max-width: 240px; line-height: 1.4;
+            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            pointer-events: none;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }
 
-        .image-caption {
-            position: absolute;
-            bottom: 20px;
-            left: 20px;
-            z-index: 2;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--cyan);
+        .label-top-left { left: auto; right: 35px; top: auto; bottom: -10px; }
+
+        .hotspot-details {
+            display: none; font-size: 0.85rem; font-weight: 400; 
+            color: #e2e8f0; margin-top: 10px; padding-top: 10px; 
+            border-top: 1px solid rgba(255,255,255,0.15);
+            line-height: 1.5;
         }
 
-        /* Staggered Animations Setup */
-        .animate-item {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        .hotspot.expanded .hotspot-label {
+            background: rgba(5, 5, 7, 0.98);
+            box-shadow: 0 12px 40px rgba(0, 229, 255, 0.3);
+            max-width: 300px; z-index: 50;
         }
+        .hotspot.expanded .hotspot-details { display: block; animation: fadeIn 0.4s ease; }
+        
+        .hotspot.violet { background-color: var(--violet); box-shadow: 0 0 15px var(--violet); }
+        .hotspot.violet::before { border-color: var(--violet); }
+        .hotspot.violet .hotspot-label { border-color: var(--violet); }
+        .hotspot.violet.expanded .hotspot-label { box-shadow: 0 12px 40px rgba(176, 38, 255, 0.3); }
 
-        .slide.active .animate-item {
-            opacity: 1;
-            transform: translateY(0);
-        }
+        .data-panel-content { display: none; animation: fadeIn 0.4s ease; }
+        .data-panel-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Navigation & Footer */
-        .controls {
-            position: absolute;
-            bottom: 40px;
-            right: 50px;
-            display: flex;
-            gap: 20px;
-            z-index: 100;
+        /* Safe Diagnostic Placeholders */
+        .diagnostic-bg {
+            background: linear-gradient(135deg, #090a0f 0%, #151828 100%);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; padding: 40px; border: 2px dashed rgba(0,229,255,0.2);
+            width: calc(100% - 80px); height: calc(100% - 80px); margin: auto; border-radius: 8px;
         }
+        .diagnostic-bg h4 { color: var(--cyan); font-size: 1.2rem; letter-spacing: 2px; margin-bottom: 10px; }
+        .diagnostic-bg p { color: var(--text-muted); font-size: 0.95rem; }
 
-        button {
-            background: var(--glass-bg);
-            backdrop-filter: blur(10px);
-            border: 1px solid var(--glass-border);
-            color: var(--text-light);
-            padding: 12px 30px;
-            font-size: 1.1rem;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
+        .biblio-list { list-style: none; padding: 0; margin: 0; overflow-y: auto; max-height: 55vh; padding-right: 20px; }
+        .biblio-item { border-left: 3px solid var(--cyan); padding-left: 20px; margin-bottom: 30px; }
+        .biblio-item strong { display: block; font-size: 1.3rem; color: var(--text-light); margin-bottom: 5px; }
+        .biblio-item em { color: var(--text-muted); font-size: 1.1rem; }
+        .biblio-locator { display: inline-block; margin-top: 8px; padding: 4px 10px; background: rgba(0, 229, 255, 0.1); border: 1px solid var(--cyan); border-radius: 4px; color: var(--cyan); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; }
 
-        button:hover {
-            background: var(--cyan);
-            color: var(--bg-dark);
-            box-shadow: 0 0 20px rgba(0, 229, 255, 0.4);
-            transform: translateY(-2px);
-        }
+        /* Custom Scrollbar */
+        .biblio-list::-webkit-scrollbar { width: 8px; }
+        .biblio-list::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); border-radius: 4px; }
+        .biblio-list::-webkit-scrollbar-thumb { background: var(--cyan); border-radius: 4px; }
 
-        .progress-bar {
-            position: absolute;
-            top: 0; left: 0; height: 5px;
-            background: linear-gradient(90deg, var(--cyan), var(--violet));
-            transition: width 0.4s ease;
-            z-index: 100;
+        .animate-item { opacity: 0; transform: translateY(30px); transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+        .slide.active .animate-item { opacity: 1; transform: translateY(0); }
+        .controls { position: absolute; bottom: 40px; right: 50px; display: flex; gap: 20px; z-index: 100; }
+        
+        button.nav-btn {
+            background: var(--glass-bg); backdrop-filter: blur(10px); border: 1px solid var(--glass-border);
+            color: var(--text-light); padding: 12px 30px; font-size: 1.1rem; font-weight: 600; border-radius: 30px; cursor: pointer; transition: all 0.3s;
         }
-
-        .footer {
-            position: absolute;
-            bottom: 30px;
-            left: 50px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
+        button.nav-btn:hover { background: var(--cyan); color: var(--bg-dark); transform: translateY(-2px); box-shadow: 0 0 20px rgba(0, 229, 255, 0.3);}
+        .progress-bar { position: absolute; top: 0; left: 0; height: 5px; background: linear-gradient(90deg, var(--cyan), var(--violet)); transition: width 0.4s ease; z-index: 100; }
+        .footer { position: absolute; bottom: 30px; left: 50px; font-size: 0.85rem; color: var(--text-muted); letter-spacing: 2px; text-transform: uppercase; }
     </style>
 </head>
 <body>
@@ -205,50 +165,32 @@
 
     <div class="slider-container">
 
-        <!-- Slide 1 -->
         <div class="slide active">
-            <div class="animate-item" style="transition-delay: 0.1s;">
-                <h1>Functional Synergy</h1>
-            </div>
-            <div class="animate-item" style="transition-delay: 0.3s;">
-                <h3 style="color: var(--text-light); font-size: 2rem;">Bridging Technical Mastery and Physiological Resilience</h3>
-            </div>
-            <div class="animate-item" style="transition-delay: 0.5s;">
-                <p style="color: var(--cyan); font-weight: 600; letter-spacing: 2px; margin-top: 20px;">CONFIDENTIAL INVESTOR PREVIEW</p>
-            </div>
+            <div class="animate-item" style="transition-delay: 0.1s;"><h1>Functional Synergy</h1></div>
+            <div class="animate-item" style="transition-delay: 0.3s;"><h3 style="color: var(--text-light); font-size: 2rem;">Bridging Technical Mastery and Physiological Resilience</h3></div>
+            <div class="animate-item" style="transition-delay: 0.5s;"><p style="color: var(--cyan); font-weight: 600; letter-spacing: 2px; margin-top: 20px;">CONFIDENTIAL PROFESSIONAL PREVIEW</p></div>
         </div>
 
-        <!-- Slide 2 -->
         <div class="slide">
-            <h2 class="animate-item">The Athlete's Reality: Market Problem</h2>
+            <h2 class="animate-item">The Athlete's Reality: Clinical Data</h2>
             <div class="grid-3 animate-item" style="transition-delay: 0.2s;">
-                <div class="glass-panel">
-                    <span class="metric-huge">72.6%</span>
-                    <p>Seasonal injury incidence rate among professional dancers.</p>
-                </div>
-                <div class="glass-panel">
-                    <span class="metric-huge">49.3%</span>
-                    <p>Concentration of injuries localized strictly to the foot.</p>
-                </div>
-                <div class="glass-panel">
-                    <span class="metric-huge">45.1%</span>
-                    <p>Concentration of injuries localized strictly to the ankle.</p>
-                </div>
+                <div class="glass-panel"><span class="metric-huge">72.6%</span><p>Seasonal incidence rate of musculoskeletal injuries among professional dancers.</p></div>
+                <div class="glass-panel"><span class="metric-huge">49.3%</span><p>Concentration of injuries localized strictly to the foot.</p></div>
+                <div class="glass-panel"><span class="metric-huge">45.1%</span><p>Concentration of injuries localized strictly to the ankle.</p></div>
             </div>
             <p class="animate-item" style="transition-delay: 0.4s; font-size: 0.9rem; color: var(--text-muted); margin-top: 20px;">
-                *Source: Liederbach, Marije, et al. "Epidemiology of Musculoskeletal Injuries..." Clin J Sport Med, 2024.
+                *Source: Barreau, Xavière, et al. "Epidemiology of Musculoskeletal Injuries in Professional Ballet Dancers at the Opéra de Paris." Clinical Journal of Sport Medicine, 2024.
             </p>
         </div>
 
-        <!-- Slide 3 -->
         <div class="slide">
-            <h2 class="animate-item">The Science of Aesthetic Strength</h2>
+            <h2 class="animate-item">The Science of Athletic Mastery</h2>
             <div class="grid-split">
                 <div class="animate-item" style="transition-delay: 0.2s;">
                     <div class="glass-panel">
                         <span class="metric-huge" style="color: var(--violet);">43.3%</span>
-                        <p style="font-weight: 600; font-size: 1.5rem;">Improvement in Aesthetic Jump Height</p>
-                        <p>Modern meta-analyses prove that targeted strength training yields massive power increases with <span class="highlight">zero unwanted muscle hypertrophy</span>.</p>
+                        <p style="font-weight: 600; font-size: 1.5rem;">Improvement in Explosive Elevation & Ballon</p>
+                        <p>Targeted strength training yields massive power increases with <span class="highlight">zero unwanted muscle hypertrophy</span>.</p>
                     </div>
                 </div>
                 <div class="animate-item" style="transition-delay: 0.4s;">
@@ -257,73 +199,222 @@
                         <li><strong>Lack of Overload:</strong> Bodyweight repetition alone cannot maximize bone density or prevent stress fractures.</li>
                         <li><strong>The Goal:</strong> We build the physiological engine that drives the art.</li>
                     </ul>
+                    <p style="font-size: 0.9rem; color: var(--text-muted); margin-top: 20px; border-top: 1px solid var(--glass-border); padding-top: 15px;">
+                        *Source: De Leonardis, Mariateresa, et al. "Effects of a plyometric supplemental training on vertical jump height and aesthetic jumping ability in adolescent female dancers." European Journal of Physical Education and Sport Science, 2020.
+                    </p>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 4: Phase 1 -->
         <div class="slide">
-            <h2 class="animate-item">Phase 1: Neuromuscular Activation</h2>
+            <h2 class="animate-item">Phase 1: Neuromuscular Activation <span style="font-size: 1.2rem; color:var(--text-muted); font-weight:400;">(Biomechanical Sequence)</span></h2>
             <div class="grid-split">
                 <div class="animate-item" style="transition-delay: 0.2s;">
-                    <div class="image-box" style="background-image: url('https://loremflickr.com/800/600/ballet,feet/all');">
-                        <div class="image-caption">Intrinsic Foot Control</div>
+                    <div class="kinematic-viewer" id="viewer-p1">
+                        <div class="kinematic-frame-container">
+                            
+                            <div class="kinematic-frame active" style="background-image: url('./images/Updated Cyan - Phase I.png');">
+                                <div class="hotspot" style="top: 25%; left: 40%;" onclick="toggleNode(this)">
+                                    <span class="hotspot-label">
+                                        Tibialis Anterior (Neutral)
+                                        <div class="hotspot-details">Controls the eccentric deceleration of the foot. In the studio, this acts as the 'brakes'—allowing for a silent, controlled roll through the demi-plié.</div>
+                                    </span>
+                                </div>
+                            </div>
+                            
+                            <div class="kinematic-frame" style="background-image: url('./images/Updated Violet - Phase I.png');">
+                                <div class="hotspot violet" style="top: 75%; left: 55%;" onclick="toggleNode(this)">
+                                    <span class="hotspot-label label-top-left">
+                                        Plantar Fascia & Flexors Engaged
+                                        <div class="hotspot-details">Actively distributes load across the metatarsal heads. This is the active shock absorber that prevents 'toe clawing' during landings.</div>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="kinematic-tabs">
+                            <div class="kinematic-tab active" onclick="syncSequence('viewer-p1', 0, 'p1-neutral')">1. Alignment Baseline</div>
+                            <div class="kinematic-tab" onclick="syncSequence('viewer-p1', 1, 'p1-arch')">2. Intrinsic Contraction</div>
+                        </div>
                     </div>
                 </div>
-                <div class="glass-panel animate-item" style="transition-delay: 0.4s;">
-                    <ul>
-                        <li><span class="highlight">Equipment:</span> Bare feet, floor, small towel.</li>
-                        <li><span class="highlight">Exercises:</span> Intrinsic Towel Scrunches & Multi-Planar Ankle Circles.</li>
-                        <li><span class="highlight">The Science:</span> Primes neural pathways for optimal dorsiflexion, preventing the kinetic chain from shutting down.</li>
-                        <li><span class="highlight">Gap Closed:</span> Eliminates compensatory "toe clawing" common in traditional barre work.</li>
-                    </ul>
+                <div class="glass-panel animate-item" style="transition-delay: 0.4s; min-height: 350px;">
+                    <div id="p1-neutral" class="data-panel-content active">
+                        <h3 style="color: var(--cyan); margin-top:0;">Assessment: The Base of Support</h3>
+                        <p><strong>Mechanics:</strong> Before load is applied, the foot must demonstrate neutral alignment without pronation (rolling in) or supination.</p>
+                        <p><strong>The Gap:</strong> Traditional classes often jump straight into barre work without establishing this neural connection, leading to instant kinetic chain breakdown.</p>
+                    </div>
+                    <div id="p1-arch" class="data-panel-content">
+                        <h3 style="color: var(--violet); margin-top:0;">Target: Intrinsic Foot Musculature</h3>
+                        <p><strong>Mechanics:</strong> Engages the plantar fascia and intrinsic stabilizers to actively grip the floor <em>without</em> curling the phalanges.</p>
+                        <p><strong>The Ballet Translation:</strong> Eliminates "toe clawing." A strong intrinsic arch acts as an active shock absorber for grand allegro landings.</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 5: Phase 2 -->
         <div class="slide">
-            <h2 class="animate-item">Phase 2: LPHC & Turnout Control</h2>
+            <h2 class="animate-item">Phase 2: LPHC & Turnout Control <span style="font-size: 1.2rem; color:var(--text-muted); font-weight:400;">(Biomechanical Sequence)</span></h2>
             <div class="grid-split">
                 <div class="animate-item" style="transition-delay: 0.2s;">
-                    <div class="image-box" style="background-image: url('https://loremflickr.com/800/600/fitness,squat/all');">
-                        <div class="image-caption">Banded Plié-Squat to Relevé</div>
+                    <div class="kinematic-viewer" id="viewer-p2">
+                        <div class="kinematic-frame-container">
+                            <div class="kinematic-frame active" style="background-image: url('./images/Descent - Phase II.png');">
+                                <div class="hotspot" style="top: 45%; left: 50%;"><span class="hotspot-label">Eccentric Glute Control</span></div>
+                            </div>
+                            <div class="kinematic-frame" style="background-image: url('./images/Deep Plie - Phase II.png');">
+                                <div class="hotspot" style="top: 55%; left: 60%;"><span class="hotspot-label">Deep Six Rotators Fired</span></div>
+                            </div>
+                            <div class="kinematic-frame" style="background-image: url('./images/Releve - Phase II.png');">
+                                <div class="hotspot" style="top: 75%; left: 45%;"><span class="hotspot-label">Gastroc-Soleus Max Load</span></div>
+                            </div>
+                        </div>
+                        <div class="kinematic-tabs">
+                            <div class="kinematic-tab active" onclick="syncSequence('viewer-p2', 0, 'p2-descent')">1. Descent</div>
+                            <div class="kinematic-tab" onclick="syncSequence('viewer-p2', 1, 'p2-plie')">2. Deep Plié</div>
+                            <div class="kinematic-tab" onclick="syncSequence('viewer-p2', 2, 'p2-releve')">3. Relevé Drive</div>
+                        </div>
                     </div>
                 </div>
-                <div class="glass-panel animate-item" style="transition-delay: 0.4s;">
-                    <ul>
-                        <li><span class="highlight">Equipment:</span> Resistance loop band.</li>
-                        <li><span class="highlight">The Science:</span> Forces continuous isometric activation of gluteus medius and deep external rotators under tension.</li>
-                        <li><span class="highlight">Value to Dancer:</span> Builds massive localized endurance in the gastroc-soleus complex.</li>
-                        <li><span class="highlight">Gap Closed:</span> Provides targeted resistance against adduction, directly strengthening active turnout.</li>
-                    </ul>
+                <div class="glass-panel animate-item" style="transition-delay: 0.4s; min-height: 350px;">
+                    <div id="p2-descent" class="data-panel-content active">
+                        <h3 style="color: var(--cyan); margin-top:0;">Target: Gluteus Medius</h3>
+                        <p><strong>Mechanics:</strong> Provides lateral pelvic stabilization against resistance during eccentric lowering.</p>
+                        <p><strong>The Ballet Translation:</strong> The ultimate anti-wobble muscle. It prevents hip dropping when transitioning to single-leg adagio.</p>
+                    </div>
+                    <div id="p2-plie" class="data-panel-content">
+                        <h3 style="color: var(--cyan); margin-top:0;">Target: Deep External Rotators</h3>
+                        <p><strong>Mechanics:</strong> Sustains isometric external rotation against resistance at max depth.</p>
+                        <p><strong>The Ballet Translation:</strong> Cultivates "true turnout" from the hip socket, preventing incorrect rotation at the knee and ankle.</p>
+                    </div>
+                    <div id="p2-releve" class="data-panel-content">
+                        <h3 style="color: var(--cyan); margin-top:0;">Target: Gastroc-Soleus Complex</h3>
+                        <p><strong>Mechanics:</strong> Explosive concentric drive to peak height with strictly vertical alignment.</p>
+                        <p><strong>The Ballet Translation:</strong> Builds the endurance required for prolonged pointe work and multiple pirouette rotations.</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 6: Phase 3 -->
         <div class="slide">
-            <h2 class="animate-item">Phase 3: Posterior Chain Power</h2>
+            <h2 class="animate-item">Phase 3: Posterior Chain Power <span style="font-size: 1.2rem; color:var(--text-muted); font-weight:400;">(Biomechanical Sequence)</span></h2>
             <div class="grid-split">
                 <div class="animate-item" style="transition-delay: 0.2s;">
-                    <div class="image-box" style="background-image: url('https://loremflickr.com/800/600/kettlebell,balance/all');">
-                        <div class="image-caption">Arabesque Single-Leg RDL</div>
+                    <div class="kinematic-viewer" id="viewer-p3">
+                        <div class="kinematic-frame-container">
+                            <div class="kinematic-frame active">
+                                <div class="diagnostic-bg">
+                                    <h4>DIAGNOSTIC ASSET 1</h4>
+                                    <p>Insert pilot photo: Dancer standing tall on one leg, kettlebell in hand.</p>
+                                </div>
+                                <div class="hotspot" style="top: 40%; left: 55%;"><span class="hotspot-label">LPHC Neutral Baseline</span></div>
+                            </div>
+                            <div class="kinematic-frame">
+                                <div class="diagnostic-bg">
+                                    <h4>DIAGNOSTIC ASSET 2</h4>
+                                    <p>Insert pilot photo: Full single-leg RDL hinge.</p>
+                                </div>
+                                <div class="hotspot" style="top: 60%; left: 35%;"><span class="hotspot-label">Hamstring Max Tension</span></div>
+                                <div class="hotspot" style="top: 35%; left: 60%;"><span class="hotspot-label">Erector Spinae Activated</span></div>
+                            </div>
+                        </div>
+                        <div class="kinematic-tabs">
+                            <div class="kinematic-tab active" onclick="syncSequence('viewer-p3', 0, 'p3-base')">1. Starting Base</div>
+                            <div class="kinematic-tab" onclick="syncSequence('viewer-p3', 1, 'p3-hinge')">2. Arabesque Hinge</div>
+                        </div>
                     </div>
                 </div>
-                <div class="glass-panel animate-item" style="transition-delay: 0.4s;">
-                    <ul>
-                        <li><span class="highlight">Equipment:</span> Single medium-weight kettlebell.</li>
-                        <li><span class="highlight">The Science:</span> Challenges unilateral pelvic stability, forcing the LPHC to resist rotation.</li>
-                        <li><span class="highlight">Value to Dancer:</span> Drastically increases raw strength required for unsupported arabesques.</li>
-                        <li><span class="highlight">Gap Closed:</span> Introduces vital posterior chain loading to protect the lower back from over-extension.</li>
-                    </ul>
+                <div class="glass-panel animate-item" style="transition-delay: 0.4s; min-height: 350px;">
+                    <div id="p3-base" class="data-panel-content active">
+                        <h3 style="color: var(--cyan); margin-top:0;">Assessment: Unilateral Stability</h3>
+                        <p><strong>Mechanics:</strong> Establishing a perfectly aligned, single-leg base while managing an offset (contralateral) load.</p>
+                        <p><strong>The Ballet Translation:</strong> Mirrors the starting mechanics of almost all center-work. The dancer must learn to stabilize the pelvis before the working leg ever leaves the floor.</p>
+                    </div>
+                    <div id="p3-hinge" class="data-panel-content">
+                        <h3 style="color: var(--cyan); margin-top:0;">Target: Hamstrings & Erector Spinae</h3>
+                        <p><strong>Mechanics:</strong> Handles massive eccentric load while hinging, while the spine resists the rotational force of the weight.</p>
+                        <p><strong>The Ballet Translation:</strong> Provides the active strength required to hold an unsupported arabesque at 90+ degrees. Protects against "dumping" into the lower back (lordosis) during cambré.</p>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 7: Implementation & Next Steps -->
         <div class="slide">
-            <h2 class="animate-item">The Pilot Integration & Go-To-Market</h2>
+            <h2 class="animate-item">Phase 4 & 5: Core & Plyometrics <span style="font-size: 1.2rem; color:var(--text-muted); font-weight:400;">(Biomechanical Sequence)</span></h2>
+            <div class="grid-split">
+                <div class="animate-item" style="transition-delay: 0.2s;">
+                    <div class="kinematic-viewer" id="viewer-p4">
+                        <div class="kinematic-frame-container">
+                            <div class="kinematic-frame active">
+                                <div class="diagnostic-bg">
+                                    <h4>DIAGNOSTIC ASSET 1</h4>
+                                    <p>Insert pilot photo: Perfect flat plank with knee drive.</p>
+                                </div>
+                                <div class="hotspot" style="top: 50%; left: 45%;"><span class="hotspot-label">Transverse Abdominis Locked</span></div>
+                            </div>
+                            <div class="kinematic-frame">
+                                <div class="diagnostic-bg">
+                                    <h4>DIAGNOSTIC ASSET 2</h4>
+                                    <p>Insert pilot photo: Dancer frozen at the apex of a jump.</p>
+                                </div>
+                                <div class="hotspot" style="top: 80%; left: 50%;"><span class="hotspot-label">Achilles Elasticity</span></div>
+                            </div>
+                        </div>
+                        <div class="kinematic-tabs">
+                            <div class="kinematic-tab active" onclick="syncSequence('viewer-p4', 0, 'p4-core')">Phase 5: Dynamic Core</div>
+                            <div class="kinematic-tab" onclick="syncSequence('viewer-p4', 1, 'p4-jump')">Phase 4: Power & Flight</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-panel animate-item" style="transition-delay: 0.4s; min-height: 350px;">
+                    <div id="p4-core" class="data-panel-content active">
+                        <h3 style="color: var(--cyan); margin-top:0;">Target: Transverse Abdominis (Core)</h3>
+                        <p><strong>Mechanics:</strong> Maintains rigid spinal alignment during rapid independent limb movement (Plank Knee Drives).</p>
+                        <p><strong>The Ballet Translation:</strong> Acts as the dancer's internal "corset." A rigid cylinder is required to maintain the vertical axis of rotation during multiple pirouettes without falling off center.</p>
+                    </div>
+                    <div id="p4-jump" class="data-panel-content">
+                        <h3 style="color: var(--cyan); margin-top:0;">Target: Achilles Tendon (Reactive Strength)</h3>
+                        <p><strong>Mechanics:</strong> Stores and rapidly releases elastic energy through plyometric sautés with minimal ground contact time.</p>
+                        <p><strong>The Ballet Translation:</strong> Training tendon stiffness minimizes energy leak into the floor. This drastically improves grand allegro height and absorbs the heavy impact forces that cause stress fractures.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="animate-item">Clinical Evidence & Bibliography</h2>
+            <div class="glass-panel animate-item" style="transition-delay: 0.2s;">
+                <ul class="biblio-list">
+                    <li class="biblio-item">
+                        <strong>72.6% Seasonal Injury Rate (Slide 2)</strong>
+                        <em>Barreau, Xavière, et al. "Epidemiology of Musculoskeletal Injuries in Professional Ballet Dancers at the Opéra de Paris." Clinical Journal of Sport Medicine, 2024.</em><br>
+                        <span class="biblio-locator">Location: Abstract > Results</span>
+                    </li>
+                    <li class="biblio-item">
+                        <strong>43.3% Improvement in Elevation/Ballon (Slide 3)</strong>
+                        <em>De Leonardis, Mariateresa, et al. "Effects of a plyometric supplemental training on vertical jump height and aesthetic jumping ability in adolescent female dancers." European Journal of Physical Education and Sport Science, 2020.</em><br>
+                        <span class="biblio-locator">Location: Abstract > Results</span>
+                    </li>
+                    <li class="biblio-item">
+                        <strong>"True Turnout" vs. Ligament Strain Mitigation (Phase 2)</strong>
+                        <em>Coplan, J. A. "Ballet Dancer's Turnout and Its Relationship to Self-Reported Injury." Journal of Orthopaedic & Sports Physical Therapy.</em><br>
+                        <span class="biblio-locator">Location: Abstract / Conclusion</span>
+                    </li>
+                    <li class="biblio-item">
+                        <strong>Mitigation of Lumbar Lordosis & "Dumping" (Phase 3)</strong>
+                        <em>Gildea, J. E., et al. "Lumbopelvic Motor Control and Low Back Pain in Dance." Journal of Athletic Training.</em><br>
+                        <span class="biblio-locator">Location: Discussion Section</span>
+                    </li>
+                    <li class="biblio-item">
+                        <strong>Tendon Stiffness & Stress Fracture Prevention (Phase 4)</strong>
+                        <em>Kadel, N. J. "Foot and Ankle Injuries in Dance." Physical Medicine and Rehabilitation Clinics of North America.</em><br>
+                        <span class="biblio-locator">Location: Biomechanics & Injury Mechanisms</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="slide">
+            <h2 class="animate-item">The Pilot Program Integration</h2>
             <div class="grid-3 animate-item" style="transition-delay: 0.3s;">
                 <div class="glass-panel">
                     <h3 style="color: var(--cyan); font-weight: 600;">Pre-Class Priming</h3>
@@ -335,7 +426,7 @@
                 </div>
                 <div class="glass-panel">
                     <h3 style="color: #ffffff; font-weight: 600;">Pilot Data Collection</h3>
-                    <p>We are actively seeking master instructors to stress-test biomechanics, UI, and protocol flow.</p>
+                    <p>We are actively seeking professional dance instructors to stress-test biomechanics, load parameters, and protocol flow.</p>
                 </div>
             </div>
         </div>
@@ -345,8 +436,8 @@
     <div class="footer">Dancer-Athlete: Functional Synergy Protocol</div>
 
     <div class="controls">
-        <button id="prevBtn" onclick="changeSlide(-1)">Back</button>
-        <button id="nextBtn" onclick="changeSlide(1)">Next Slide</button>
+        <button id="prevBtn" class="nav-btn" onclick="changeSlide(-1)">Back</button>
+        <button id="nextBtn" class="nav-btn" onclick="changeSlide(1)">Next Slide</button>
     </div>
 
     <script>
@@ -356,25 +447,20 @@
         const prevBtn = document.getElementById('prevBtn');
         const nextBtn = document.getElementById('nextBtn');
 
+        // Master Slide Navigation
         function updateUI() {
             slides.forEach((slide, index) => {
-                if (index === currentSlide) {
-                    slide.classList.add('active');
-                } else {
-                    slide.classList.remove('active');
-                }
+                slide.classList.toggle('active', index === currentSlide);
             });
 
-            // Update Progress Bar
             const progress = ((currentSlide + 1) / slides.length) * 100;
             progressBar.style.width = progress + '%';
 
-            // Button States
             prevBtn.style.opacity = currentSlide === 0 ? '0.3' : '1';
             prevBtn.style.pointerEvents = currentSlide === 0 ? 'none' : 'auto';
             
             if (currentSlide === slides.length - 1) {
-                nextBtn.innerHTML = "Finish Pitch";
+                nextBtn.innerHTML = "Join the Movement";
                 nextBtn.style.background = "var(--cyan)";
                 nextBtn.style.color = "var(--bg-dark)";
             } else {
@@ -395,6 +481,42 @@
             if (e.key === 'ArrowRight') changeSlide(1);
             if (e.key === 'ArrowLeft') changeSlide(-1);
         });
+
+        // Auto-Sync Kinematic Logic
+        function syncSequence(viewerId, frameIndex, panelId) {
+            const viewer = document.getElementById(viewerId);
+            const frames = viewer.querySelectorAll('.kinematic-frame');
+            const tabs = viewer.querySelectorAll('.kinematic-tab');
+
+            // Sync the Visual Frame & Tabs
+            frames.forEach((f, i) => f.classList.toggle('active', i === frameIndex));
+            tabs.forEach((t, i) => t.classList.toggle('active', i === frameIndex));
+
+            // Sync the HUD Data Panel
+            const activeSlide = document.querySelector('.slide.active');
+            const allPanels = activeSlide.querySelectorAll('.data-panel-content');
+            
+            allPanels.forEach(panel => panel.classList.remove('active'));
+            if(document.getElementById(panelId)) {
+                document.getElementById(panelId).classList.add('active');
+            }
+            
+            // Auto-collapse expanded nodes when switching tabs
+            const hotspots = viewer.querySelectorAll('.hotspot');
+            hotspots.forEach(h => h.classList.remove('expanded'));
+        }
+
+        // Toggle Node Interaction
+        function toggleNode(element) {
+            // Close any other open nodes to keep the UI clean
+            const allNodes = document.querySelectorAll('.hotspot');
+            allNodes.forEach(node => {
+                if(node !== element) node.classList.remove('expanded');
+            });
+            
+            // Toggle the clicked node
+            element.classList.toggle('expanded');
+        }
 
         // Initialize
         updateUI();
