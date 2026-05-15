@@ -117,14 +117,6 @@
         .hotspot.violet::before { border-color: var(--violet); }
         .hotspot.violet .hotspot-label { border-color: var(--violet); }
 
-        .diagnostic-bg {
-            background: linear-gradient(135deg, #090a0f 0%, #151828 100%);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            text-align: center; padding: 40px; border: 2px dashed rgba(0,229,255,0.2);
-            width: calc(100% - 80px); height: calc(100% - 80px); margin: auto; border-radius: 8px;
-        }
-        .diagnostic-bg h4 { color: var(--cyan); letter-spacing: 2px; }
-
         .animate-item { opacity: 0; transform: translateY(30px); transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94); }
         .slide.active .animate-item { opacity: 1; transform: translateY(0); }
         .controls { position: absolute; bottom: 40px; right: 50px; display: flex; gap: 20px; z-index: 100; }
@@ -315,18 +307,23 @@
                 <div class="animate-item" style="transition-delay: 0.2s;">
                     <div class="kinematic-viewer" id="viewer-p4">
                         <div class="kinematic-frame-container">
-                            <div class="kinematic-frame active">
-                                <div class="diagnostic-bg">
-                                    <h4>THE INTERNAL CORSET</h4>
-                                    <p style="font-size:0.9rem;">(Upload asset as: Plank-PhaseIV.png)</p>
+                            
+                            <div class="kinematic-frame active" style="background-image: url('./images/Plank%20Knee%20Drive%20-%20Phase%20IV.png');">
+                                <div class="hotspot" style="top: 55%; left: 45%;" onclick="toggleNode(this)">
+                                    <span class="hotspot-label">Active Core Corset
+                                        <div class="hotspot-details">Transverse Abdominis locks the LPHC. A rigid cylinder is required to maintain the vertical axis of rotation during multiple pirouettes without falling off center.</div>
+                                    </span>
                                 </div>
                             </div>
-                            <div class="kinematic-frame">
-                                <div class="diagnostic-bg">
-                                    <h4>TENDON ELASTICITY</h4>
-                                    <p style="font-size:0.9rem;">(Upload asset as: Flight-PhaseV.png)</p>
+                            
+                            <div class="kinematic-frame" style="background-image: url('./images/Reactive%20Plyometrics%20-%20Phase%20V.png');">
+                                <div class="hotspot" style="top: 75%; left: 50%;" onclick="toggleNode(this)">
+                                    <span class="hotspot-label label-top-left">Achilles Elastic Recoil
+                                        <div class="hotspot-details">Training tendon stiffness minimizes energy leak into the floor. This drastically improves grand allegro height and absorbs heavy impact forces.</div>
+                                    </span>
                                 </div>
                             </div>
+
                         </div>
                         <div class="kinematic-tabs">
                             <div class="kinematic-tab active" onclick="syncSequence('viewer-p4', 0)">Phase 4: Dynamic Core</div>
@@ -337,9 +334,9 @@
                 <div class="glass-panel animate-item" style="transition-delay: 0.4s;">
                     <ul class="feature-list">
                         <li><strong>Equipment:</strong> Bodyweight, flat surface.</li>
-                        <li><strong>The Science:</strong> Trains Achilles tendon stiffness to minimize energy leak into the floor.</li>
-                        <li><strong>Value to Dancer:</strong> A rigid core cylinder is required to maintain the vertical axis of rotation during pirouettes.</li>
-                        <li><strong>Gap Closed:</strong> Absorbs the high impact forces that cause stress fractures in grand allegro.</li>
+                        <li><strong>The Science:</strong> Trains Achilles tendon stiffness and maintains rigid spinal alignment during rapid limb movement.</li>
+                        <li><strong>Value to Dancer:</strong> Acts as the dancer's internal corset for pirouettes and drastically improves grand allegro height.</li>
+                        <li><strong>Gap Closed:</strong> Minimizes energy leak into the floor, protecting against heavy impact stress fractures.</li>
                     </ul>
                 </div>
             </div>
