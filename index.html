@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Functional Synergy | Professional Review</title>
+    <title>The Dancer-Athlete Protocol | Professional Review</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -39,6 +39,7 @@
         /* Typography */
         h1 { font-size: 4.5rem; font-weight: 800; margin-bottom: 0.5rem; background: linear-gradient(90deg, var(--cyan), var(--violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 1.1; }
         h2 { font-size: 3rem; font-weight: 600; margin-bottom: 30px; border-bottom: 1px solid var(--glass-border); padding-bottom: 15px; }
+        h3 { font-size: 1.5rem; font-weight: 400; color: var(--text-muted); }
         p { font-size: 1.1rem; line-height: 1.7; color: #d1d8e0; margin-bottom: 15px; }
         .highlight { color: var(--cyan); font-weight: 600; }
         .metric-huge { font-size: 5rem; font-weight: 800; color: var(--cyan); display: block; line-height: 1; margin-bottom: 10px; }
@@ -46,7 +47,7 @@
         .grid-split { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; height: 100%; align-items: center; }
         .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-top: 20px; }
 
-        /* Feature List Styling */
+        /* Custom Bullet Layout for Right Panel */
         .feature-list { list-style: none; padding: 0; margin: 0; }
         .feature-list li { font-size: 1.05rem; line-height: 1.6; color: #d1d8e0; margin-bottom: 15px; padding-left: 20px; position: relative; }
         .feature-list li::before { content: '•'; color: var(--cyan); font-size: 1.5rem; position: absolute; left: 0; top: -4px; }
@@ -68,7 +69,7 @@
         }
         .kinematic-frame.active { opacity: 1; visibility: visible; z-index: 5; }
 
-        /* Tabs */
+        /* Sync Tabs */
         .kinematic-tabs { display: flex; height: 50px; background: rgba(255,255,255,0.02); border-top: 1px solid var(--glass-border); z-index: 10; }
         .kinematic-tab {
             flex: 1; display: flex; align-items: center; justify-content: center;
@@ -78,7 +79,7 @@
         .kinematic-tab:last-child { border-right: none; }
         .kinematic-tab.active { background: rgba(0, 229, 255, 0.15); color: var(--cyan); border-bottom: 2px solid var(--cyan); }
 
-        /* Interactive Nodes (Hotspots) */
+        /* Advanced Interactive Hotspots */
         .hotspot {
             position: absolute; width: 24px; height: 24px; background-color: var(--cyan);
             border-radius: 50%; z-index: 10; transform: translate(-50%, -50%);
@@ -90,7 +91,7 @@
         }
         @keyframes pulse { 0% { transform: scale(0.8); opacity: 1; } 100% { transform: scale(2); opacity: 0; } }
 
-        /* Fixed Wrapping Hotspot Labels */
+        /* UPGRADED HOTSPOT LABELS */
         .hotspot-label {
             position: absolute; left: 35px; top: -10px;
             background: rgba(5, 5, 7, 0.9);
@@ -154,7 +155,7 @@
     <div class="slider-container">
 
         <div class="slide active">
-            <div class="animate-item" style="transition-delay: 0.1s;"><h1>Functional Synergy</h1></div>
+            <div class="animate-item" style="transition-delay: 0.1s;"><h1>The Dancer-Athlete Protocol</h1></div>
             <div class="animate-item" style="transition-delay: 0.3s;"><h3 style="color: var(--text-light); font-size: 2rem; font-weight:400;">Bridging Technical Mastery and Physiological Resilience</h3></div>
             <div class="animate-item" style="transition-delay: 0.5s;"><p style="color: var(--cyan); font-weight: 600; letter-spacing: 2px; margin-top: 20px;">CONFIDENTIAL PROFESSIONAL PREVIEW</p></div>
         </div>
@@ -381,7 +382,7 @@
 
     </div>
 
-    <div class="footer">Dancer-Athlete: Functional Synergy Protocol</div>
+    <div class="footer">The Dancer-Athlete Protocol</div>
 
     <div class="controls">
         <button id="prevBtn" class="nav-btn" onclick="changeSlide(-1)">Back</button>
